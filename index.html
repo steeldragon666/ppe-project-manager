@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPE Strategic Execution — Project Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   SOVEREIGN DARK DESIGN SYSTEM
+   Power Plant Energy — Strategic Execution Command Centre
+   Canvas: Layered Navy  |  Accent: Gold  |  Mode: Sovereign Dark
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Canvas ── */
+  --canvas-deep:      #000810;
+  --canvas:           #000C1D;
+  --canvas-raised:    #001233;
+  --surface:          rgba(0, 24, 69, 0.65);
+  --surface-hover:    rgba(0, 32, 91, 0.75);
+  --surface-glass:    rgba(0, 18, 51, 0.55);
+  --surface-overlay:  rgba(0, 8, 16, 0.85);
+
+  /* ── Brand ── */
+  --navy:             #00205B;
+  --navy-light:       #002D7A;
+  --gold:             #D4AF37;
+  --gold-dim:         rgba(212, 175, 55, 0.15);
+  --gold-glow:        rgba(212, 175, 55, 0.25);
+  --gold-bright:      #E8C94A;
+
+  /* ── Borders ── */
+  --border:           rgba(212, 175, 55, 0.08);
+  --border-subtle:    rgba(255, 255, 255, 0.04);
+  --border-accent:    rgba(212, 175, 55, 0.25);
+  --border-strong:    rgba(212, 175, 55, 0.4);
+
+  /* ── Text ── */
+  --text-primary:     #E8ECF4;
+  --text-secondary:   #8B9DC3;
+  --text-tertiary:    #5A6F94;
+  --text-inverse:     #000C1D;
+  --text-gold:        #D4AF37;
+
+  /* ── Status ── */
+  --status-success:   #34D399;
+  --status-success-bg:rgba(52, 211, 153, 0.1);
+  --status-warning:   #FBBF24;
+  --status-warning-bg:rgba(251, 191, 36, 0.1);
+  --status-error:     #F87171;
+  --status-error-bg:  rgba(248, 113, 113, 0.1);
+  --status-info:      #60A5FA;
+  --status-info-bg:   rgba(96, 165, 250, 0.1);
+  --status-purple:    #A78BFA;
+  --status-purple-bg: rgba(167, 139, 250, 0.1);
+  --status-orange:    #FB923C;
+  --status-orange-bg: rgba(251, 146, 60, 0.1);
+
+  /* ── Shadows ── */
+  --shadow:      0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:   0 4px 12px rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.3);
+  --shadow-lg:   0 12px 40px rgba(0,0,0,.5), 0 4px 12px rgba(0,0,0,.4);
+  --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.08);
+
+  /* ── Motion ── */
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-sm:  150ms;
+  --duration-md:  250ms;
+  --duration-lg:  400ms;
+
+  /* ── Space (8px grid) ── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px;
+
+  /* ── Radius ── */
+  --radius-sm: 6px; --radius: 10px; --radius-lg: 16px; --radius-full: 9999px;
+
+  /* ── Legacy compat (referenced by JS-generated HTML) ── */
+  --teal: var(--gold); --teal-light: var(--gold-dim); --teal-dark: var(--navy);
+  --amber: var(--status-warning); --amber-light: var(--status-warning-bg);
+  --red: var(--status-error); --red-light: var(--status-error-bg);
+  --green: var(--status-success); --green-light: var(--status-success-bg);
+  --blue: var(--status-info); --blue-light: var(--status-info-bg);
+  --purple: var(--status-purple); --purple-light: var(--status-purple-bg);
+  --orange: var(--status-orange); --orange-light: var(--status-orange-bg);
+  --gray-50: rgba(255,255,255,0.02); --gray-100: var(--canvas);
+  --gray-200: var(--border); --gray-300: var(--border-accent);
+  --gray-400: var(--text-tertiary); --gray-500: var(--text-secondary);
+  --gray-600: var(--text-secondary); --gray-700: var(--text-primary);
+  --gray-800: var(--text-primary); --gray-900: #FFFFFF;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--canvas-deep);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ═══ HEADER ═══ */
+.header {
+  background: linear-gradient(135deg, var(--canvas-deep) 0%, var(--navy) 60%, #001845 100%);
+  color: var(--text-primary);
+  padding: var(--space-6) var(--space-8);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4);
+  border-bottom: 1px solid var(--border-accent);
+  position: relative;
+}
+.header::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.4;
+}
+.header h1 { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: #FFF; }
+.header .subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 2px; letter-spacing: 0.2px; }
+.header-right { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+.header-stat {
+  text-align: center; background: var(--surface-glass); backdrop-filter: blur(12px);
+  border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-2) var(--space-4); min-width: 95px;
+  transition: border-color var(--duration-md) var(--ease-out);
+}
+.header-stat:hover { border-color: var(--border-accent); }
+.header-stat .val { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 800; color: var(--gold); }
+.header-stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); }
+
+/* ═══ TABS ═══ */
+.tabs { background: var(--canvas); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; padding: 0 var(--space-6); scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  padding: var(--space-3) var(--space-5); font-size: 13px; font-weight: 600; cursor: pointer;
+  border-bottom: 2px solid transparent; color: var(--text-tertiary); white-space: nowrap;
+  transition: all var(--duration-md) var(--ease-out); letter-spacing: 0.1px;
+}
+.tab:hover { color: var(--text-secondary); }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ═══ FILTERS ═══ */
+.filters-bar {
+  display: flex; gap: var(--space-3); padding: var(--space-4) var(--space-6); flex-wrap: wrap; align-items: center;
+  background: var(--canvas); border-bottom: 1px solid var(--border);
+}
+.filter-group { display: flex; align-items: center; gap: 6px; }
+.filter-group label { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.8px; }
+select, .search-input {
+  padding: 7px 12px; border: 1px solid var(--border-accent); border-radius: var(--radius-sm);
+  font-size: 13px; font-family: 'Inter', sans-serif; background: var(--surface); color: var(--text-primary); outline: none;
+  transition: all var(--duration-md) var(--ease-out);
+}
+select option { background: var(--canvas-raised); color: var(--text-primary); }
+select:focus, .search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+.search-input { width: 220px; }
+.search-input::placeholder { color: var(--text-tertiary); }
+
+/* ═══ BUTTONS ═══ */
+.btn {
+  padding: 7px 16px; border-radius: var(--radius-sm); font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer; border: none;
+  transition: all var(--duration-sm) var(--ease-out);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: var(--text-inverse);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+.btn-primary:hover { box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3); transform: translateY(-1px); }
+.btn-outline { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-accent); }
+.btn-outline:hover { background: var(--surface); color: var(--text-primary); border-color: var(--gold); }
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+.btn-dep { background: linear-gradient(135deg, var(--status-orange), #E97A1F); color: #FFF; }
+.btn-dep:hover { box-shadow: 0 4px 16px rgba(251, 146, 60, 0.3); transform: translateY(-1px); }
+
+/* ═══ LAYOUT ═══ */
+.main { padding: var(--space-6); max-width: 1600px; margin: 0 auto; }
+.panel { display: none; }
+.panel.active { display: block; animation: panelIn var(--duration-lg) var(--ease-out); }
+@keyframes panelIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══ KPI CARDS ═══ */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+.kpi {
+  background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: var(--space-5); box-shadow: var(--shadow);
+  position: relative; overflow: hidden; transition: all var(--duration-md) var(--ease-out);
+}
+.kpi:hover { border-color: var(--border-accent); box-shadow: var(--shadow-md), var(--shadow-gold); transform: translateY(-2px); }
+.kpi::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 0 2px 2px 0; }
+.kpi.teal::before { background: var(--gold); } .kpi.amber::before { background: var(--status-warning); }
+.kpi.green::before { background: var(--status-success); } .kpi.red::before { background: var(--status-error); }
+.kpi.blue::before { background: var(--status-info); } .kpi.purple::before { background: var(--status-purple); }
+.kpi.orange::before { background: var(--status-orange); }
+.kpi .kpi-val { font-family: 'DM Sans', sans-serif; font-size: 30px; font-weight: 800; color: #FFF; letter-spacing: -0.5px; }
+.kpi .kpi-lbl { font-size: 10px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-top: var(--space-1); }
+.kpi .kpi-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+
+/* ═══ CHARTS ═══ */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6); }
+.chart-card {
+  background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: var(--space-5); box-shadow: var(--shadow);
+  transition: border-color var(--duration-md) var(--ease-out);
+}
+.chart-card:hover { border-color: var(--border-accent); }
+.chart-card h3 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: var(--space-4); text-transform: uppercase; letter-spacing: 0.5px; }
+.chart-container { position: relative; height: 260px; }
+
+/* ═══ TABLES ═══ */
+.table-card {
+  background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: var(--space-6);
+}
+.table-header { padding: var(--space-4) var(--space-5); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.table-header h3 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  background: rgba(0, 18, 51, 0.8); padding: 10px 14px; text-align: left; font-weight: 600;
+  color: var(--text-tertiary); font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+  border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap; user-select: none;
+  transition: color var(--duration-sm) var(--ease-out);
+}
+th:hover { color: var(--gold); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); vertical-align: middle; color: var(--text-primary); }
+tr { transition: background var(--duration-sm) var(--ease-out); }
+tr:hover td { background: rgba(212, 175, 55, 0.03); }
+tr.overdue td { background: rgba(248, 113, 113, 0.06); }
+
+/* ═══ BADGES ═══ */
+.badge { display: inline-block; padding: 3px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; white-space: nowrap; }
+.badge-todo { background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--border); }
+.badge-progress { background: var(--status-info-bg); color: var(--status-info); border: 1px solid rgba(96, 165, 250, 0.2); }
+.badge-done { background: var(--status-success-bg); color: var(--status-success); border: 1px solid rgba(52, 211, 153, 0.2); }
+.badge-dep { background: var(--status-orange-bg); color: var(--status-orange); border: 1px solid rgba(251, 146, 60, 0.2); }
+.badge-review { background: var(--status-purple-bg); color: var(--status-purple); border: 1px solid rgba(167, 139, 250, 0.2); }
+.badge-critical { background: var(--status-error-bg); color: var(--status-error); border: 1px solid rgba(248, 113, 113, 0.2); }
+.badge-high { background: var(--status-orange-bg); color: var(--status-orange); border: 1px solid rgba(251, 146, 60, 0.15); }
+.badge-medium { background: var(--status-warning-bg); color: var(--status-warning); border: 1px solid rgba(251, 191, 36, 0.15); }
+.badge-low { background: var(--status-success-bg); color: var(--status-success); border: 1px solid rgba(52, 211, 153, 0.15); }
+
+/* ═══ AVATARS ═══ */
+.avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--text-inverse); flex-shrink: 0; border: 2px solid transparent;
+}
+.avatar-aaron { background: var(--gold); border-color: rgba(212, 175, 55, 0.3); }
+.avatar-tim { background: var(--status-info); border-color: rgba(96, 165, 250, 0.3); }
+.avatar-nigel { background: var(--status-purple); border-color: rgba(167, 139, 250, 0.3); }
+.avatar-unassigned { background: rgba(255,255,255,0.1); color: var(--text-tertiary); border-color: var(--border); }
+.assignee-cell { display: flex; align-items: center; gap: 8px; }
+
+/* ═══ INITIATIVE BADGES ═══ */
+.init-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.init-1 { background: rgba(52, 211, 153, 0.12); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.15); }
+.init-2 { background: rgba(96, 165, 250, 0.12); color: #60A5FA; border: 1px solid rgba(96, 165, 250, 0.15); }
+.init-3 { background: rgba(251, 191, 36, 0.12); color: #FBBF24; border: 1px solid rgba(251, 191, 36, 0.15); }
+.init-4 { background: rgba(244, 114, 182, 0.12); color: #F472B6; border: 1px solid rgba(244, 114, 182, 0.15); }
+.init-5 { background: rgba(167, 139, 250, 0.12); color: #A78BFA; border: 1px solid rgba(167, 139, 250, 0.15); }
+
+/* ═══ MODALS ═══ */
+.modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 4, 12, 0.8); backdrop-filter: blur(8px); z-index: 1000;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--canvas-raised); border: 1px solid var(--border-accent); border-radius: var(--radius-lg);
+  padding: var(--space-8); width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(212, 175, 55, 0.05);
+  animation: modalIn var(--duration-lg) var(--ease-out);
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal h2 { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: var(--space-5); color: #FFF; }
+.form-group { margin-bottom: var(--space-4); }
+.form-group label { display: block; font-size: 10px; font-weight: 600; color: var(--text-tertiary); margin-bottom: var(--space-1); text-transform: uppercase; letter-spacing: 0.8px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 8px 12px; border: 1px solid var(--border-accent); border-radius: var(--radius-sm);
+  font-size: 13px; font-family: 'Inter', sans-serif; outline: none; background: var(--surface); color: var(--text-primary);
+  transition: all var(--duration-md) var(--ease-out);
+}
+.form-group textarea { resize: vertical; min-height: 60px; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-tertiary); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: var(--space-5); }
+.form-hint { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; font-style: italic; }
+
+/* ═══ FEED ═══ */
+.feed-card { background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: var(--space-6); overflow: hidden; }
+.feed-header { padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.feed-header h3 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
+.feed-compose { padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border); background: rgba(0, 8, 16, 0.4); }
+.feed-compose-row { display: flex; gap: 10px; align-items: flex-start; }
+.feed-compose textarea {
+  flex: 1; padding: 10px 14px; border: 1px solid var(--border-accent); border-radius: var(--radius);
+  font-size: 13px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 50px; outline: none;
+  background: var(--surface); color: var(--text-primary); transition: all var(--duration-md) var(--ease-out);
+}
+.feed-compose textarea::placeholder { color: var(--text-tertiary); }
+.feed-compose textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+.feed-compose-actions { display: flex; flex-direction: column; gap: 6px; }
+.feed-items { max-height: 600px; overflow-y: auto; }
+.feed-items::-webkit-scrollbar { width: 4px; }
+.feed-items::-webkit-scrollbar-track { background: transparent; }
+.feed-items::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+.feed-item { padding: 14px 20px; border-bottom: 1px solid var(--border-subtle); transition: background var(--duration-sm); }
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: rgba(212, 175, 55, 0.02); }
+.feed-item-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.feed-item-meta { font-size: 11px; color: var(--text-tertiary); }
+.feed-item-body { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.feed-item-task { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+.feed-item-task .init-badge { font-size: 10px; padding: 1px 6px; }
+.feed-dep-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--status-orange-bg); color: var(--status-orange); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-top: 6px; border: 1px solid rgba(251, 146, 60, 0.15); }
+
+/* ═══ RULE BANNER ═══ */
+.rule-banner {
+  background: linear-gradient(135deg, var(--canvas-raised), rgba(0, 32, 91, 0.5));
+  border: 1px solid var(--border-accent); color: var(--text-primary);
+  padding: var(--space-3) var(--space-5); font-size: 12px; border-radius: var(--radius);
+  margin-bottom: var(--space-4); display: flex; align-items: center; gap: 10px;
+}
+.rule-banner strong { font-size: 13px; color: var(--gold); }
+.rule-icon { font-size: 18px; flex-shrink: 0; color: var(--gold); }
+
+/* ═══ GANTT ═══ */
+.gantt-container { overflow-x: auto; background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.gantt-header { display: flex; padding: var(--space-4) var(--space-5); align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.gantt-header h3 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
+.gantt-grid { min-width: 1000px; padding: var(--space-4); }
+.gantt-months { display: flex; margin-left: 260px; }
+.gantt-month { flex: 1; text-align: center; font-size: 10px; font-weight: 600; color: var(--text-tertiary); padding: 6px 0; border-left: 1px solid var(--border-subtle); letter-spacing: 0.5px; text-transform: uppercase; }
+.gantt-row { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-subtle); }
+.gantt-label { width: 260px; flex-shrink: 0; font-size: 12px; font-weight: 600; color: var(--text-secondary); padding-right: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gantt-bars { flex: 1; display: flex; position: relative; height: 24px; }
+.gantt-bar { position: absolute; height: 20px; border-radius: 4px; top: 2px; font-size: 10px; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; min-width: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.gantt-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--gold); z-index: 5; box-shadow: 0 0 8px rgba(212, 175, 55, 0.4); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, 1fr); } .header { padding: var(--space-4); } .main { padding: var(--space-4); } }
+@media (max-width: 600px) { .kpis { grid-template-columns: 1fr; } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+.urgent { animation: pulse 2s infinite; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+@media print { .tabs, .filters-bar, .btn, .modal-overlay, .feed-compose { display: none !important; } .panel { display: block !important; } body { background: white; color: #111; } .kpi, .chart-card, .table-card, .feed-card, .gantt-container { background: white; border: 1px solid #ddd; box-shadow: none; } }
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Power Plant Energy &#8212; Strategic Execution</h1>
+    <div class="subtitle">$1.3B Burdekin Bamboo Biorefinery &#8212; 5 Priority Initiatives</div>
+  </div>
+  <div class="header-right">
+    <div class="header-stat"><div class="val" id="hdr-total">0</div><div class="lbl">Total Tasks</div></div>
+    <div class="header-stat"><div class="val" id="hdr-done">0</div><div class="lbl">Completed</div></div>
+    <div class="header-stat"><div class="val" id="hdr-pct">0%</div><div class="lbl">Progress</div></div>
+    <div class="header-stat"><div class="val" id="hdr-funding">$223M</div><div class="lbl">Funding Target</div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="dashboard">Dashboard</div>
+  <div class="tab" data-tab="updates">Status Updates</div>
+  <div class="tab" data-tab="tasks">All Tasks</div>
+  <div class="tab" data-tab="init1">1. Chempolis</div>
+  <div class="tab" data-tab="init2">2. CCTP</div>
+  <div class="tab" data-tab="init3">3. ARENA</div>
+  <div class="tab" data-tab="init4">4. Qantas</div>
+  <div class="tab" data-tab="init5">5. Reef Bond</div>
+  <div class="tab" data-tab="timeline">Timeline</div>
+  <div class="tab" data-tab="team">Team Load</div>
+</div>
+
+<div class="filters-bar">
+  <div class="filter-group"><label>Assignee</label>
+    <select id="f-assignee"><option value="">All</option><option>Aaron</option><option>Tim</option><option>Nigel</option><option>Unassigned</option></select>
+  </div>
+  <div class="filter-group"><label>Status</label>
+    <select id="f-status"><option value="">All</option><option>To Do</option><option>In Progress</option><option>In Review</option><option>Done</option><option>Needs New Task</option></select>
+  </div>
+  <div class="filter-group"><label>Priority</label>
+    <select id="f-priority"><option value="">All</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+  </div>
+  <div class="filter-group"><label>Initiative</label>
+    <select id="f-initiative"><option value="">All</option><option value="1">1. Chempolis</option><option value="2">2. CCTP</option><option value="3">3. ARENA</option><option value="4">4. Qantas</option><option value="5">5. Reef Bond</option></select>
+  </div>
+  <input type="text" class="search-input" id="f-search" placeholder="Search tasks...">
+  <button class="btn btn-primary" onclick="openAddTask()">+ Add Task</button>
+  <button class="btn btn-outline" onclick="exportCSV()">Export CSV</button>
+</div>
+
+<div class="main">
+  <div class="panel active" id="panel-dashboard">
+    <div class="kpis" id="kpi-area"></div>
+    <div class="charts-row">
+      <div class="chart-card"><h3>Tasks by Initiative</h3><div class="chart-container"><canvas id="chart-init"></canvas></div></div>
+      <div class="chart-card"><h3>Status Breakdown</h3><div class="chart-container"><canvas id="chart-status"></canvas></div></div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-card"><h3>Team Workload</h3><div class="chart-container"><canvas id="chart-team"></canvas></div></div>
+      <div class="chart-card"><h3>Priority Distribution</h3><div class="chart-container"><canvas id="chart-priority"></canvas></div></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header"><h3 class="urgent" style="color:var(--status-error)">Urgent &#8212; Due Within 30 Days</h3></div>
+      <div class="table-wrap"><table><thead><tr><th>Task</th><th>Initiative</th><th>Assignee</th><th>Due</th><th>Status</th><th>Priority</th></tr></thead><tbody id="urgent-body"></tbody></table></div>
+    </div>
+    <div class="feed-card">
+      <div class="feed-header"><h3>Latest Status Updates</h3></div>
+      <div class="feed-items" id="dash-feed-items" style="max-height:300px"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-updates">
+    <div class="rule-banner">
+      <span class="rule-icon">&#9888;</span>
+      <div><strong>Accountability Rule:</strong> Updates are about YOUR tasks only. You cannot attribute responsibility to another person. If your task needs something that doesn't exist yet, add it as a new dependency task assigned to yourself &#8212; then reassign if agreed in standup.</div>
+    </div>
+    <div id="updates-area"></div>
+  </div>
+
+  <div class="panel" id="panel-tasks">
+    <div class="table-card">
+      <div class="table-header"><h3>All Tasks (<span id="task-count">0</span>)</h3></div>
+      <div class="table-wrap">
+        <table><thead><tr>
+          <th data-sort="task">Task</th><th data-sort="initiative">Init</th><th data-sort="phase">Phase</th>
+          <th data-sort="assignee">Assignee</th><th data-sort="due">Due Date</th><th data-sort="status">Status</th>
+          <th data-sort="priority">Priority</th><th>Deps</th><th>Actions</th>
+        </tr></thead><tbody id="tasks-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-init1"></div>
+  <div class="panel" id="panel-init2"></div>
+  <div class="panel" id="panel-init3"></div>
+  <div class="panel" id="panel-init4"></div>
+  <div class="panel" id="panel-init5"></div>
+
+  <div class="panel" id="panel-timeline">
+    <div class="gantt-container">
+      <div class="gantt-header"><h3>Execution Timeline &#8212; Q2 2026 to Q4 2027</h3></div>
+      <div class="gantt-grid" id="gantt-grid"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-team"></div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h2 id="modal-title">Edit Task</h2>
+    <input type="hidden" id="edit-id">
+    <div class="form-group"><label>Task Name</label><input type="text" id="edit-task"></div>
+    <div class="form-group"><label>Initiative</label>
+      <select id="edit-initiative"><option value="1">1. Chempolis</option><option value="2">2. CCTP</option><option value="3">3. ARENA</option><option value="4">4. Qantas</option><option value="5">5. Reef Bond</option></select>
+    </div>
+    <div class="form-group"><label>Phase</label><input type="text" id="edit-phase"></div>
+    <div class="form-group"><label>Assignee</label>
+      <select id="edit-assignee"><option value="">Unassigned</option><option>Aaron</option><option>Tim</option><option>Nigel</option></select>
+    </div>
+    <div class="form-group"><label>Due Date</label><input type="date" id="edit-due"></div>
+    <div class="form-group"><label>Status</label>
+      <select id="edit-status"><option>To Do</option><option>In Progress</option><option>In Review</option><option>Done</option><option>Needs New Task</option></select>
+    </div>
+    <div class="form-group"><label>Priority</label>
+      <select id="edit-priority"><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+    </div>
+    <div class="form-group"><label>Notes</label><textarea id="edit-notes"></textarea></div>
+    <div id="dep-section" style="display:none">
+      <div class="form-group">
+        <label>Add Dependency Task (assigned to you)</label>
+        <input type="text" id="edit-dep-task" placeholder="What new task is needed to unblock this?">
+        <div class="form-hint">This creates a new task assigned to you. Cannot reference another person's responsibility.</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="dep-modal-overlay">
+  <div class="modal">
+    <h2>Add Dependency Task</h2>
+    <div class="rule-banner" style="margin-bottom:16px">
+      <span class="rule-icon">&#9888;</span>
+      <div><strong>Ownership rule:</strong> This new task is assigned to YOU. If it needs to be reassigned, discuss at standup. You own the gap until someone else accepts it.</div>
+    </div>
+    <input type="hidden" id="dep-parent-id">
+    <div class="form-group"><label>What's needed? (New task description)</label><input type="text" id="dep-new-task"></div>
+    <div class="form-group"><label>Initiative</label>
+      <select id="dep-initiative"><option value="1">1. Chempolis</option><option value="2">2. CCTP</option><option value="3">3. ARENA</option><option value="4">4. Qantas</option><option value="5">5. Reef Bond</option></select>
+    </div>
+    <div class="form-group"><label>Due Date</label><input type="date" id="dep-due"></div>
+    <div class="form-group"><label>Priority</label>
+      <select id="dep-priority"><option>Critical</option><option>High</option><option selected>Medium</option><option>Low</option></select>
+    </div>
+    <div class="form-group"><label>Your name (owner of this dependency)</label>
+      <select id="dep-owner"><option>Aaron</option><option>Tim</option><option>Nigel</option></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeDepModal()">Cancel</button>
+      <button class="btn btn-dep" onclick="saveDependency()">+ Add Dependency Task</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let nextId = 100;
+const INITIATIVES = {
+  1:{name:'Chempolis Partnership',short:'Chempolis',value:'Tech Licence',color:'#34D399'},
+  2:{name:'CCTP Round 2 + Critical Minerals',short:'CCTP/CritMin',value:'$3\u201310M',color:'#60A5FA'},
+  3:{name:'ARENA $15M FEED Study',short:'ARENA FEED',value:'$15M',color:'#FBBF24'},
+  4:{name:'Qantas $5M Strategic Investment',short:'Qantas',value:'$5M',color:'#F472B6'},
+  5:{name:'$200M Reef Credit Bond',short:'Reef Bond',value:'$200M',color:'#A78BFA'}
+};
+
+let updates = [
+  {id:1, author:'Aaron', timestamp:'2026-04-06T08:00', taskId:null, text:'Strategic Execution Plan v1.0 finalised and distributed to board. Five initiatives locked \u2014 cascading capital formation sequence begins this week.', type:'general'},
+  {id:2, author:'Aaron', timestamp:'2026-04-06T08:15', taskId:11, text:'CCTP grant writer engagement is the #1 priority this week. I am reaching out to three shortlisted writers today.', type:'update'},
+  {id:3, author:'Tim', timestamp:'2026-04-06T08:20', taskId:12, text:'Initiating contact with QUT Centre for Materials Science and UQ School of Chemical Engineering simultaneously to secure research partner commitment by Friday.', type:'update'},
+];
+let nextUpdateId = 10;
+
+let tasks = [
+  {id:1, task:'CEO-to-CEO introduction to Chempolis (Oulu, Finland)', initiative:1, phase:'A: Engagement', assignee:'Aaron', due:'2026-04-17', status:'To Do', priority:'Critical', notes:'Leverage Arbios Biotech connection as warm intro pathway', deps:[]},
+  {id:2, task:'Prepare technical briefing package (Beema Bamboo data, patents, site data)', initiative:1, phase:'A: Engagement', assignee:'Tim', due:'2026-04-24', status:'To Do', priority:'Critical', notes:'Include compositional analysis, Burdekin site data, patent portfolio, integration architecture', deps:[]},
+  {id:3, task:'Execute mutual NDA with Chempolis', initiative:1, phase:'A: Engagement', assignee:'Aaron', due:'2026-04-30', status:'To Do', priority:'High', notes:'Standard mutual NDA for proprietary process parameters and commercial terms', deps:[]},
+  {id:4, task:'Ship Beema Bamboo samples to Chempolis pilot facility', initiative:1, phase:'B: Due Diligence', assignee:'Tim', due:'2026-05-15', status:'To Do', priority:'High', notes:'Fractionation trials: cellulose yield, lignin quality, ethanol conversion', deps:[]},
+  {id:5, task:'Review formicobio mass and energy balances for bamboo feedstock', initiative:1, phase:'B: Due Diligence', assignee:'Tim', due:'2026-05-22', status:'To Do', priority:'High', notes:'PPE technical team review adapted for bamboo', deps:[]},
+  {id:6, task:'Site visit to Finland \u2014 Chempolis & Arbios Biotech facilities', initiative:1, phase:'B: Due Diligence', assignee:'Aaron', due:'2026-05-29', status:'To Do', priority:'High', notes:'Assess technology readiness on-site', deps:[]},
+  {id:7, task:'Engage IP/technology transfer lawyers (Aus + Finland)', initiative:1, phase:'C: Negotiation', assignee:'Nigel', due:'2026-06-19', status:'To Do', priority:'High', notes:'Key terms: exclusivity, royalty, performance guarantees', deps:[]},
+  {id:8, task:'Draft and negotiate binding term sheet', initiative:1, phase:'C: Negotiation', assignee:'Aaron', due:'2026-07-17', status:'To Do', priority:'Critical', notes:'$2-5M upfront + royalty. Exclusive Australian licence for bamboo feedstock', deps:[]},
+  {id:9, task:'Secure board approval for binding term sheet', initiative:1, phase:'C: Negotiation', assignee:'Aaron', due:'2026-07-31', status:'To Do', priority:'High', notes:'Both parties seek board approval', deps:[]},
+  {id:10, task:'Joint media release \u2014 Chempolis partnership announcement', initiative:1, phase:'C: Negotiation', assignee:'Nigel', due:'2026-08-14', status:'To Do', priority:'Medium', notes:'Time to coincide with ARENA pre-application submission', deps:[]},
+  {id:11, task:'Engage specialist grant writer with DCCEEW/CCTP experience', initiative:2, phase:'Wk1: Mobilise', assignee:'Aaron', due:'2026-04-11', status:'To Do', priority:'Critical', notes:'URGENT \u2014 31 days to deadline. Non-negotiable given timeline.', deps:[]},
+  {id:12, task:'Confirm research partner (QUT preferred) + secure letter of support', initiative:2, phase:'Wk1: Mobilise', assignee:'Tim', due:'2026-04-11', status:'To Do', priority:'Critical', notes:'Approach QUT and UQ simultaneously', deps:[]},
+  {id:13, task:'Brief patent attorney \u2014 prepare patent summary for application', initiative:2, phase:'Wk1: Mobilise', assignee:'Nigel', due:'2026-04-11', status:'To Do', priority:'High', notes:'4 provisional patents to summarise', deps:[]},
+  {id:14, task:'Contact DCCEEW program team \u2014 confirm eligibility interpretation', initiative:2, phase:'Wk1: Mobilise', assignee:'Aaron', due:'2026-04-11', status:'To Do', priority:'High', notes:'Discuss proposed application scope', deps:[]},
+  {id:15, task:'Draft CCTP application \u2014 emphasis on Criterion 1 (50 pts)', initiative:2, phase:'Wk2: Draft', assignee:'Aaron', due:'2026-04-18', status:'To Do', priority:'Critical', notes:'Biomass carbon removal with durable sequestration framing', deps:[]},
+  {id:16, task:'Prepare project plan, budget breakdown, milestones & Gantt', initiative:2, phase:'Wk2: Draft', assignee:'Tim', due:'2026-04-18', status:'To Do', priority:'High', notes:'$3-5M target, 5 work packages', deps:[]},
+  {id:17, task:'Compile supporting evidence (patents, Beema data, Cane Growers MOU)', initiative:2, phase:'Wk2: Draft', assignee:'Nigel', due:'2026-04-18', status:'To Do', priority:'High', notes:'Include Chempolis partnership status', deps:[]},
+  {id:18, task:'Commission preliminary LCA estimates for carbon capture claims', initiative:2, phase:'Wk2: Draft', assignee:'Tim', due:'2026-04-18', status:'To Do', priority:'High', notes:'Quantify: 17 tCO2e/ha/yr sequestered', deps:[]},
+  {id:19, task:'Internal review and red-team application against criteria', initiative:2, phase:'Wk3: Review', assignee:'Aaron', due:'2026-04-25', status:'To Do', priority:'High', notes:'ANZAC Day 27 April \u2014 adjust schedule', deps:[]},
+  {id:20, task:'Secure final letters of support (research partner, Cane Growers, graphite offtaker)', initiative:2, phase:'Wk3: Review', assignee:'Nigel', due:'2026-04-25', status:'To Do', priority:'High', notes:'Critical supporting docs', deps:[]},
+  {id:21, task:'External review by grant writing specialist \u2014 DCCEEW language focus', initiative:2, phase:'Wk3: Review', assignee:'Aaron', due:'2026-04-25', status:'To Do', priority:'Medium', notes:'Professional polish on framing', deps:[]},
+  {id:22, task:'Begin parallel Critical Minerals Development Program EOI prep', initiative:2, phase:'Wk3: Review', assignee:'Tim', due:'2026-04-25', status:'To Do', priority:'Medium', notes:'Stacked funding strategy', deps:[]},
+  {id:23, task:'Final CCTP application polish, budget reconciliation, compliance check', initiative:2, phase:'Wk4: Finalise', assignee:'Aaron', due:'2026-05-01', status:'To Do', priority:'Critical', notes:'Target submission 2 May (4-day buffer)', deps:[]},
+  {id:24, task:'CEO sign-off and authorisation on CCTP application', initiative:2, phase:'Wk4: Finalise', assignee:'Aaron', due:'2026-05-01', status:'To Do', priority:'Critical', notes:'Final approval before upload', deps:[]},
+  {id:25, task:'Upload CCTP application to grants portal', initiative:2, phase:'Wk4: Finalise', assignee:'Aaron', due:'2026-05-02', status:'To Do', priority:'Critical', notes:'TARGET: Friday 2 May. Deadline: 6 May 5PM AEST', deps:[]},
+  {id:26, task:'Final CCTP review and submit if not already done (DEADLINE 6 May)', initiative:2, phase:'Wk5: Contingency', assignee:'Aaron', due:'2026-05-06', status:'To Do', priority:'Critical', notes:'HARD DEADLINE \u2014 5:00 PM AEST Wednesday 6 May 2026', deps:[]},
+  {id:27, task:'Submit Critical Minerals Development Program EOI', initiative:2, phase:'Wk5: Contingency', assignee:'Tim', due:'2026-06-30', status:'To Do', priority:'High', notes:'Parallel pathway \u2014 graphite/graphene as critical mineral', deps:[]},
+  {id:28, task:'Submit Advance Queensland IRF application', initiative:2, phase:'Stacked Funding', assignee:'Tim', due:'2026-09-30', status:'To Do', priority:'Medium', notes:'$360K target \u2014 bamboo carbonisation research fellowship', deps:[]},
+  {id:29, task:'Submit CSIRO Graphite R&D Program expression of interest', initiative:2, phase:'Stacked Funding', assignee:'Nigel', due:'2026-06-30', status:'To Do', priority:'Medium', notes:'$50K \u2014 graphite spheronisation and purification R&D', deps:[]},
+  {id:30, task:'Request pre-application meeting with ARENA bioenergy team', initiative:3, phase:'Pre-engagement', assignee:'Aaron', due:'2026-10-15', status:'To Do', priority:'High', notes:'Present project overview, Chempolis partnership', deps:[]},
+  {id:31, task:'Position application under Advancing Renewables \u2014 bioenergy & SAF', initiative:3, phase:'Pre-engagement', assignee:'Aaron', due:'2026-11-15', status:'To Do', priority:'High', notes:'Show credible path to $1.3B capital stack', deps:[]},
+  {id:32, task:'Draft ARENA FEED application with scope, budget, milestones', initiative:3, phase:'Pre-engagement', assignee:'Tim', due:'2026-12-15', status:'To Do', priority:'High', notes:'7 work packages totalling $15M', deps:[]},
+  {id:33, task:'Secure Chempolis process design package commitment for FEED input', initiative:3, phase:'Pre-engagement', assignee:'Aaron', due:'2026-11-30', status:'To Do', priority:'Critical', notes:'Required \u2014 cannot proceed without technology partner input', deps:[]},
+  {id:34, task:'Submit full ARENA application (FEED scope, budget, milestones)', initiative:3, phase:'Application', assignee:'Aaron', due:'2027-02-28', status:'To Do', priority:'Critical', notes:'Target Q1 2027 submission', deps:[]},
+  {id:35, task:'Secure co-funding commitments ($3M PPE, $2M Chempolis, $2M QLD, $1M research)', initiative:3, phase:'Application', assignee:'Nigel', due:'2027-02-15', status:'To Do', priority:'High', notes:'Total $23M project', deps:[]},
+  {id:36, task:'ARENA due diligence and site visit preparation', initiative:3, phase:'Assessment', assignee:'Tim', due:'2027-04-30', status:'To Do', priority:'High', notes:'Panel assessment process', deps:[]},
+  {id:37, task:'Negotiate ARENA funding agreement and execute', initiative:3, phase:'Approval', assignee:'Aaron', due:'2027-06-30', status:'To Do', priority:'Critical', notes:'Conditional approval target Q2 2027', deps:[]},
+  {id:38, task:'Identify mutual contacts via SAF Taskforce / DCCEEW / ARENA', initiative:4, phase:'Introduction', assignee:'Aaron', due:'2027-01-15', status:'To Do', priority:'High', notes:'Warm intro to Qantas sustainability and fuel procurement', deps:[]},
+  {id:39, task:'Approach Qantas venture/innovation arm as alternative pathway', initiative:4, phase:'Introduction', assignee:'Nigel', due:'2027-01-31', status:'To Do', priority:'Medium', notes:'Backup if taskforce intro is slow', deps:[]},
+  {id:40, task:'Present SAF production pathway to Qantas (Beema to Chempolis to ATJ)', initiative:4, phase:'Technical Briefing', assignee:'Aaron', due:'2027-02-28', status:'To Do', priority:'High', notes:'Include pricing, timeline, CORSIA lifecycle assessment', deps:[]},
+  {id:41, task:'Share ARENA FEED status + Chempolis partnership maturity docs', initiative:4, phase:'Technical Briefing', assignee:'Tim', due:'2027-03-15', status:'To Do', priority:'Medium', notes:'Demonstrate project credibility', deps:[]},
+  {id:42, task:'Engage corporate advisory firm (Macquarie/Greenhill) for deal structuring', initiative:4, phase:'Negotiation', assignee:'Nigel', due:'2027-03-31', status:'To Do', priority:'High', notes:'$5M equity + SAF offtake structure', deps:[]},
+  {id:43, task:'Negotiate equity terms and SAF offtake pricing mechanism', initiative:4, phase:'Negotiation', assignee:'Aaron', due:'2027-05-15', status:'To Do', priority:'Critical', notes:'$5M at $25-40M pre-money. Min 20K tonnes/yr offtake', deps:[]},
+  {id:44, task:'Draft binding term sheet (conditions precedent linked to ARENA)', initiative:4, phase:'Negotiation', assignee:'Nigel', due:'2027-06-15', status:'To Do', priority:'Critical', notes:'Convertible note with discount, or direct equity', deps:[]},
+  {id:45, task:'Joint Qantas-PPE public announcement', initiative:4, phase:'Announcement', assignee:'Aaron', due:'2027-06-30', status:'To Do', priority:'Medium', notes:'Time to support ARENA or bond roadshow', deps:[]},
+  {id:46, task:'Develop green bond framework (ICMA aligned)', initiative:5, phase:'1: Framework', assignee:'Nigel', due:'2027-06-15', status:'To Do', priority:'High', notes:'$400K budget', deps:[]},
+  {id:47, task:'Engage SPO provider (ISS ESG / Sustainalytics)', initiative:5, phase:'1: Framework', assignee:'Nigel', due:'2027-06-30', status:'To Do', priority:'High', notes:'$150K', deps:[]},
+  {id:48, task:'Engage S&P and Moodys for dual credit rating', initiative:5, phase:'2: Credit Rating', assignee:'Nigel', due:'2027-07-31', status:'To Do', priority:'Critical', notes:'$300K. Target BBB/BBB+', deps:[]},
+  {id:49, task:'Prepare trust deed, prospectus, AFSL compliance, listing application', initiative:5, phase:'3: Legal Docs', assignee:'Nigel', due:'2027-08-31', status:'To Do', priority:'High', notes:'$1.5M budget', deps:[]},
+  {id:50, task:'Obtain Second Party Opinion on green bond framework', initiative:5, phase:'4: SPO', assignee:'Tim', due:'2027-08-15', status:'To Do', priority:'High', notes:'$150K', deps:[]},
+  {id:51, task:'Investor roadshow \u2014 Aus super funds, ESG institutions, natural capital', initiative:5, phase:'5: Roadshow', assignee:'Aaron', due:'2027-09-15', status:'To Do', priority:'Critical', notes:'$200K', deps:[]},
+  {id:52, task:'Price discovery, allocation, and settlement', initiative:5, phase:'6: Book-Building', assignee:'Nigel', due:'2027-11-15', status:'To Do', priority:'Critical', notes:'$4M underwriting', deps:[]},
+  {id:53, task:'ASX or SGX listing for secondary market trading', initiative:5, phase:'7: Listing', assignee:'Nigel', due:'2027-12-15', status:'To Do', priority:'High', notes:'$100K', deps:[]},
+  {id:54, task:'Commence plantation establishment within 60 days of settlement', initiative:5, phase:'Execution', assignee:'Tim', due:'2028-01-31', status:'To Do', priority:'Critical', notes:'8,000 hectares Beema Bamboo', deps:[]},
+  {id:55, task:'Establish Strategic Initiatives Steering Committee (monthly cadence)', initiative:1, phase:'Governance', assignee:'Aaron', due:'2026-04-30', status:'To Do', priority:'High', notes:'CEO chairs', deps:[]},
+  {id:56, task:'Set up weekly Initiative Dashboard reporting', initiative:1, phase:'Governance', assignee:'Tim', due:'2026-04-18', status:'To Do', priority:'Medium', notes:'Status of each initiative, risks, next actions', deps:[]},
+];
+
+let sortCol = 'due', sortAsc = true;
+let charts = {};
+
+Chart.defaults.color = '#5A6F94';
+Chart.defaults.borderColor = 'rgba(212, 175, 55, 0.06)';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.padding = 12;
+
+function getFiltered() {
+  const fa=document.getElementById('f-assignee').value, fs=document.getElementById('f-status').value;
+  const fp=document.getElementById('f-priority').value, fi=document.getElementById('f-initiative').value;
+  const fq=document.getElementById('f-search').value.toLowerCase();
+  return tasks.filter(t => {
+    if (fa==='Unassigned'&&t.assignee) return false;
+    if (fa&&fa!=='Unassigned'&&t.assignee!==fa) return false;
+    if (fs&&t.status!==fs) return false; if (fp&&t.priority!==fp) return false;
+    if (fi&&t.initiative!==+fi) return false;
+    if (fq&&!t.task.toLowerCase().includes(fq)&&!(t.notes||'').toLowerCase().includes(fq)) return false;
+    return true;
+  });
+}
+function sorted(arr) {
+  return [...arr].sort((a,b) => {
+    let va=a[sortCol]||'',vb=b[sortCol]||'';
+    if(sortCol==='initiative'){va=+va;vb=+vb;} if(sortCol==='due'){va=va||'9999';vb=vb||'9999';}
+    let cmp=va<vb?-1:va>vb?1:0; return sortAsc?cmp:-cmp;
+  });
+}
+function statusBadge(s){const cls={'To Do':'badge-todo','In Progress':'badge-progress','Done':'badge-done','Needs New Task':'badge-dep','In Review':'badge-review'}[s]||'badge-todo';return '<span class="badge '+cls+'">'+s+'</span>';}
+function priorityBadge(p){const cls={'Critical':'badge-critical','High':'badge-high','Medium':'badge-medium','Low':'badge-low'}[p]||'badge-medium';return '<span class="badge '+cls+'">'+p+'</span>';}
+function initBadge(i){return '<span class="init-badge init-'+i+'">'+i+'. '+INITIATIVES[i].short+'</span>';}
+function avatarHTML(name){
+  if(!name) return '<div class="assignee-cell"><span class="avatar avatar-unassigned">?</span> <span style="color:var(--text-tertiary)">Unassigned</span></div>';
+  return '<div class="assignee-cell"><span class="avatar avatar-'+name.toLowerCase()+'">'+name[0]+'</span> '+name+'</div>';
+}
+function daysUntil(due){if(!due)return Infinity;return Math.ceil((new Date(due)-new Date())/86400000);}
+function fmtDate(d){if(!d)return '\u2014';return new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});}
+function fmtTimestamp(ts){var d=new Date(ts);return d.toLocaleDateString('en-AU',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});}
+
+var BLOCKED_PHRASES=[/waiting\s+(?:on|for)\s+(aaron|tim|nigel)/i,/(aaron|tim|nigel)\s+(?:hasn't|hasnt|has not|didn't|didnt|did not|won't|wont|will not|needs to|should|must|failed)/i,/(?:blocked|held up|delayed|stalled)\s+by\s+(aaron|tim|nigel)/i,/(aaron|tim|nigel)\s+(?:is|are)\s+(?:blocking|delaying|holding)/i,/can't\s+(?:proceed|progress|move|continue)\s+(?:because|until)\s+(aaron|tim|nigel)/i,/need\s+(aaron|tim|nigel)\s+to/i];
+function validateComment(text,author){
+  var otherMembers=['Aaron','Tim','Nigel'].filter(function(n){return n!==author;});
+  for(var r=0;r<BLOCKED_PHRASES.length;r++){var match=text.match(BLOCKED_PHRASES[r]);if(match){for(var o=0;o<otherMembers.length;o++){if(text.toLowerCase().indexOf(otherMembers[o].toLowerCase())!==-1&&BLOCKED_PHRASES[r].test(text)){return{valid:false,reason:'Updates cannot attribute responsibility to '+otherMembers[o]+'. Instead, add a dependency task that YOU own.'};}}}}
+  return{valid:true};
+}
+
+function render(){var f=getFiltered();renderHeader();renderKPIs(f);renderCharts(f);renderUrgent(f);renderTasksTable(f);renderInitPanels();renderGantt();renderTeam();renderUpdatesPanel();renderDashFeed();}
+
+function renderHeader(){var total=tasks.length,done=tasks.filter(function(t){return t.status==='Done';}).length;document.getElementById('hdr-total').textContent=total;document.getElementById('hdr-done').textContent=done;document.getElementById('hdr-pct').textContent=total?Math.round(done/total*100)+'%':'0%';}
+
+function renderKPIs(filtered){
+  var total=filtered.length,done=filtered.filter(function(t){return t.status==='Done';}).length;
+  var inProg=filtered.filter(function(t){return t.status==='In Progress';}).length;
+  var needsDep=filtered.filter(function(t){return t.status==='Needs New Task';}).length;
+  var critical=filtered.filter(function(t){return t.priority==='Critical'&&t.status!=='Done';}).length;
+  var overdue=filtered.filter(function(t){return t.status!=='Done'&&daysUntil(t.due)<0;}).length;
+  var depCount=tasks.reduce(function(s,t){return s+(t.deps||[]).length;},0);
+  document.getElementById('kpi-area').innerHTML='<div class="kpi teal"><div class="kpi-val">'+total+'</div><div class="kpi-lbl">Total Tasks</div><div class="kpi-sub">'+done+' completed</div></div><div class="kpi green"><div class="kpi-val">'+(total?Math.round(done/total*100):0)+'%</div><div class="kpi-lbl">Completion</div><div class="kpi-sub">'+done+' of '+total+'</div></div><div class="kpi blue"><div class="kpi-val">'+inProg+'</div><div class="kpi-lbl">In Progress</div><div class="kpi-sub">Active now</div></div><div class="kpi orange"><div class="kpi-val">'+needsDep+'</div><div class="kpi-lbl">Needs New Task</div><div class="kpi-sub">Dependencies to add</div></div><div class="kpi amber"><div class="kpi-val">'+critical+'</div><div class="kpi-lbl">Critical Open</div><div class="kpi-sub">Highest priority</div></div><div class="kpi red"><div class="kpi-val">'+overdue+'</div><div class="kpi-lbl">Overdue</div><div class="kpi-sub">'+(overdue>0?'Action required':'On track')+'</div></div><div class="kpi purple"><div class="kpi-val">'+depCount+'</div><div class="kpi-lbl">Dependencies</div><div class="kpi-sub">Added tasks</div></div>';
+}
+
+function renderCharts(filtered){
+  var initCounts=[1,2,3,4,5].map(function(i){return filtered.filter(function(t){return t.initiative===i;}).length;});
+  var initDone=[1,2,3,4,5].map(function(i){return filtered.filter(function(t){return t.initiative===i&&t.status==='Done';}).length;});
+  if(charts.init)charts.init.destroy();
+  charts.init=new Chart(document.getElementById('chart-init'),{type:'bar',data:{labels:Object.values(INITIATIVES).map(function(i){return i.short;}),datasets:[{label:'Remaining',data:initCounts.map(function(c,i){return c-initDone[i];}),backgroundColor:Object.values(INITIATIVES).map(function(i){return i.color+'40';}),borderColor:Object.values(INITIATIVES).map(function(i){return i.color;}),borderWidth:1},{label:'Done',data:initDone,backgroundColor:Object.values(INITIATIVES).map(function(i){return i.color+'CC';}),borderColor:Object.values(INITIATIVES).map(function(i){return i.color;}),borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,grid:{color:'rgba(212,175,55,0.04)'}},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(212,175,55,0.04)'}}}}});
+  var statuses=['To Do','In Progress','In Review','Done','Needs New Task'];
+  var statusColors=['rgba(255,255,255,0.15)','#60A5FA','#A78BFA','#34D399','#FB923C'];
+  if(charts.status)charts.status.destroy();
+  charts.status=new Chart(document.getElementById('chart-status'),{type:'doughnut',data:{labels:statuses,datasets:[{data:statuses.map(function(s){return filtered.filter(function(t){return t.status===s;}).length;}),backgroundColor:statusColors,borderWidth:2,borderColor:'#001233',hoverBorderColor:'#D4AF37'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}},cutout:'65%'}});
+  var members=['Aaron','Tim','Nigel','Unassigned'];
+  if(charts.team)charts.team.destroy();
+  charts.team=new Chart(document.getElementById('chart-team'),{type:'bar',data:{labels:members,datasets:statuses.map(function(s,si){return{label:s,data:members.map(function(m){return filtered.filter(function(t){return(m==='Unassigned'?!t.assignee:t.assignee===m)&&t.status===s;}).length;}),backgroundColor:statusColors[si]+'99',borderColor:statusColors[si],borderWidth:1};})},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,grid:{color:'rgba(212,175,55,0.04)'}},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(212,175,55,0.04)'}}}}});
+  var priorities=['Critical','High','Medium','Low'];
+  var priColors=['#F87171','#FB923C','#FBBF24','#34D399'];
+  if(charts.priority)charts.priority.destroy();
+  charts.priority=new Chart(document.getElementById('chart-priority'),{type:'doughnut',data:{labels:priorities,datasets:[{data:priorities.map(function(p){return filtered.filter(function(t){return t.priority===p;}).length;}),backgroundColor:priColors,borderWidth:2,borderColor:'#001233',hoverBorderColor:'#D4AF37'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}},cutout:'65%'}});
+}
+
+function renderUrgent(filtered){
+  var soon=new Date(Date.now()+30*86400000);
+  var urgent=filtered.filter(function(t){return t.status!=='Done'&&t.due&&new Date(t.due)<=soon;}).sort(function(a,b){return a.due.localeCompare(b.due);});
+  var tbody=document.getElementById('urgent-body');
+  if(!urgent.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-tertiary)">No urgent tasks in the next 30 days</td></tr>';return;}
+  tbody.innerHTML=urgent.map(function(t){var days=daysUntil(t.due),cls=days<0?'overdue':'';var dueLabel=days<0?'<span style="color:var(--status-error);font-weight:700">'+Math.abs(days)+'d overdue</span>':days===0?'<span style="color:var(--status-warning);font-weight:700">Today</span>':days+'d';return'<tr class="'+cls+'"><td style="font-weight:600">'+t.task+'</td><td>'+initBadge(t.initiative)+'</td><td>'+avatarHTML(t.assignee)+'</td><td>'+fmtDate(t.due)+' ('+dueLabel+')</td><td>'+statusBadge(t.status)+'</td><td>'+priorityBadge(t.priority)+'</td></tr>';}).join('');
+}
+
+function renderTasksTable(filtered){
+  var list=sorted(filtered);document.getElementById('task-count').textContent=list.length;
+  document.getElementById('tasks-body').innerHTML=list.map(function(t){var days=daysUntil(t.due),cls=(t.status!=='Done'&&days<0)?'overdue':'';var depCount=(t.deps||[]).length;return'<tr class="'+cls+'"><td style="font-weight:600;max-width:340px">'+t.task+'</td><td>'+initBadge(t.initiative)+'</td><td style="font-size:12px;color:var(--text-tertiary)">'+t.phase+'</td><td>'+avatarHTML(t.assignee)+'</td><td style="white-space:nowrap">'+fmtDate(t.due)+'</td><td>'+statusBadge(t.status)+'</td><td>'+priorityBadge(t.priority)+'</td><td>'+(depCount?'<span class="badge badge-dep">'+depCount+' dep'+(depCount>1?'s':'')+'</span>':'')+'</td><td style="white-space:nowrap"><button class="btn btn-outline btn-sm" onclick="editTask('+t.id+')">Edit</button> <button class="btn btn-outline btn-sm" onclick="cycleStatus('+t.id+')" title="Advance status">&rarr;</button> <button class="btn btn-outline btn-sm" onclick="openDepModal('+t.id+')" title="Add dependency task">+Dep</button></td></tr>';}).join('');
+}
+
+function renderUpdatesPanel(){
+  var panel=document.getElementById('updates-area');var members=['Aaron','Tim','Nigel'];var html='';
+  members.forEach(function(m){var cls=m.toLowerCase();var myTasks=tasks.filter(function(t){return t.assignee===m&&t.status!=='Done';});var myUpdates=updates.filter(function(u){return u.author===m;}).sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);});
+  html+='<div class="feed-card"><div class="feed-header"><div style="display:flex;align-items:center;gap:10px"><span class="avatar avatar-'+cls+'" style="width:32px;height:32px;font-size:14px">'+m[0]+'</span><h3>'+m+"'s Updates</h3><span style=\"font-size:12px;color:var(--text-tertiary)\">"+myTasks.length+' open tasks</span></div></div><div class="feed-compose"><div style="font-size:10px;color:var(--text-tertiary);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px">Post an update (as '+m+') \u2014 about YOUR tasks only</div><div class="feed-compose-row"><textarea id="compose-'+cls+'" placeholder="What progress have I made? What am I working on next?"></textarea><div class="feed-compose-actions"><select id="compose-task-'+cls+'" style="font-size:11px;padding:4px 8px;min-width:140px;background:var(--surface);color:var(--text-primary);border:1px solid var(--border-accent);border-radius:4px"><option value="">General update</option>'+myTasks.map(function(t){return'<option value="'+t.id+'">#'+t.id+': '+t.task.substring(0,40)+(t.task.length>40?'...':'')+'</option>';}).join('')+'</select><button class="btn btn-primary btn-sm" onclick="postUpdate(\''+m+'\')">Post</button><button class="btn btn-dep btn-sm" onclick="postUpdateWithDep(\''+m+'\')" title="Post + add dependency">Post + Dep</button></div></div></div><div class="feed-items">';
+  if(myUpdates.length){myUpdates.forEach(function(u){var linkedTask=u.taskId?tasks.find(function(t){return t.id===u.taskId;}):null;html+='<div class="feed-item"><div class="feed-item-header"><span class="avatar avatar-'+cls+'" style="width:24px;height:24px;font-size:10px">'+m[0]+'</span><strong style="font-size:13px">'+m+'</strong><span class="feed-item-meta">'+fmtTimestamp(u.timestamp)+'</span>'+(u.type==='dependency'?'<span class="feed-dep-badge">+ New Task Added</span>':'')+'</div><div class="feed-item-body">'+u.text+'</div>'+(linkedTask?'<div class="feed-item-task">'+initBadge(linkedTask.initiative)+' <span>Re: #'+linkedTask.id+' '+linkedTask.task.substring(0,60)+'</span></div>':'')+'</div>';});}else{html+='<div style="padding:20px;color:var(--text-tertiary);text-align:center;font-size:13px">No updates yet.</div>';}
+  html+='</div></div>';});
+  panel.innerHTML=html;
+}
+
+function renderDashFeed(){
+  var recent=updates.sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);}).slice(0,8);var el=document.getElementById('dash-feed-items');
+  if(!recent.length){el.innerHTML='<div style="padding:20px;color:var(--text-tertiary);text-align:center">No updates yet</div>';return;}
+  el.innerHTML=recent.map(function(u){var cls=u.author.toLowerCase();var linkedTask=u.taskId?tasks.find(function(t){return t.id===u.taskId;}):null;return'<div class="feed-item"><div class="feed-item-header"><span class="avatar avatar-'+cls+'" style="width:24px;height:24px;font-size:10px">'+u.author[0]+'</span><strong style="font-size:13px">'+u.author+'</strong><span class="feed-item-meta">'+fmtTimestamp(u.timestamp)+'</span>'+(u.type==='dependency'?'<span class="feed-dep-badge">+ New Task Added</span>':'')+'</div><div class="feed-item-body">'+u.text+'</div>'+(linkedTask?'<div class="feed-item-task">'+initBadge(linkedTask.initiative)+' Re: #'+linkedTask.id+' '+linkedTask.task.substring(0,60)+'</div>':'')+'</div>';}).join('');
+}
+
+function postUpdate(author){var cls=author.toLowerCase();var textarea=document.getElementById('compose-'+cls);var taskSel=document.getElementById('compose-task-'+cls);var text=textarea.value.trim();if(!text)return alert('Please write an update before posting.');var v=validateComment(text,author);if(!v.valid){alert(v.reason);return;}var taskId=taskSel.value?+taskSel.value:null;updates.push({id:++nextUpdateId,author:author,timestamp:new Date().toISOString(),taskId:taskId,text:text,type:'update'});textarea.value='';taskSel.value='';render();}
+
+function postUpdateWithDep(author){var cls=author.toLowerCase();var textarea=document.getElementById('compose-'+cls);var taskSel=document.getElementById('compose-task-'+cls);var text=textarea.value.trim();if(!text)return alert('Please write an update describing what new task is needed.');var v=validateComment(text,author);if(!v.valid){alert(v.reason);return;}var parentTaskId=taskSel.value?+taskSel.value:null;var parentTask=parentTaskId?tasks.find(function(t){return t.id===parentTaskId;}):null;var newTask={id:++nextId,task:'[DEP] '+text.substring(0,120),initiative:parentTask?parentTask.initiative:1,phase:'Dependency',assignee:author,due:'',status:'To Do',priority:'High',notes:'Dependency added by '+author+(parentTask?' for task #'+parentTask.id:''),deps:[]};tasks.push(newTask);if(parentTask){if(!parentTask.deps)parentTask.deps=[];parentTask.deps.push(newTask.id);parentTask.status='Needs New Task';}updates.push({id:++nextUpdateId,author:author,timestamp:new Date().toISOString(),taskId:parentTaskId,text:text+' \u2192 Created new dependency task #'+newTask.id+' (assigned to myself)',type:'dependency'});textarea.value='';taskSel.value='';render();}
+
+function renderInitPanels(){
+  for(var i=1;i<=5;i++){var panel=document.getElementById('panel-init'+i);var it=tasks.filter(function(t){return t.initiative===i;});var done=it.filter(function(t){return t.status==='Done';}).length;var pct=it.length?Math.round(done/it.length*100):0;var phases=[];it.forEach(function(t){if(phases.indexOf(t.phase)===-1)phases.push(t.phase);});
+  var html='<div style="display:flex;align-items:center;gap:16px;margin-bottom:20px"><h2 style="font-family:\'DM Sans\',sans-serif;font-size:20px;color:#FFF">Initiative '+i+': '+INITIATIVES[i].name+'</h2><span class="badge" style="background:'+INITIATIVES[i].color+'18;color:'+INITIATIVES[i].color+';font-size:13px;padding:4px 14px;border:1px solid '+INITIATIVES[i].color+'30">'+INITIATIVES[i].value+'</span><span style="margin-left:auto;font-size:14px;font-weight:700;color:'+(pct===100?'var(--status-success)':'var(--text-secondary)')+'">'+pct+'% complete</span></div><div style="background:rgba(255,255,255,0.04);border-radius:6px;height:6px;margin-bottom:24px;overflow:hidden"><div style="background:'+INITIATIVES[i].color+';height:100%;width:'+pct+'%;border-radius:6px;transition:width .4s var(--ease-out);box-shadow:0 0 12px '+INITIATIVES[i].color+'40"></div></div>';
+  phases.forEach(function(phase){var pt=it.filter(function(t){return t.phase===phase;});html+='<div class="table-card" style="margin-bottom:16px"><div class="table-header"><h3>'+phase+'</h3><span style="font-size:12px;color:var(--text-tertiary)">'+pt.filter(function(t){return t.status==='Done';}).length+'/'+pt.length+' done</span></div><div class="table-wrap"><table><thead><tr><th>Task</th><th>Assignee</th><th>Due</th><th>Status</th><th>Priority</th><th>Actions</th></tr></thead><tbody>'+pt.map(function(t){return'<tr><td style="font-weight:600">'+t.task+((t.deps||[]).length?' <span class="badge badge-dep" style="font-size:9px">'+t.deps.length+' dep</span>':'')+'</td><td>'+avatarHTML(t.assignee)+'</td><td style="white-space:nowrap">'+fmtDate(t.due)+'</td><td>'+statusBadge(t.status)+'</td><td>'+priorityBadge(t.priority)+'</td><td><button class="btn btn-outline btn-sm" onclick="editTask('+t.id+')">Edit</button> <button class="btn btn-outline btn-sm" onclick="cycleStatus('+t.id+')">&rarr;</button> <button class="btn btn-outline btn-sm" onclick="openDepModal('+t.id+')">+Dep</button></td></tr>';}).join('')+'</tbody></table></div></div>';});
+  panel.innerHTML=html;}
+}
+
+function renderGantt(){
+  var months=['Apr 26','May 26','Jun 26','Jul 26','Aug 26','Sep 26','Oct 26','Nov 26','Dec 26','Jan 27','Feb 27','Mar 27','Apr 27','May 27','Jun 27','Jul 27','Aug 27','Sep 27','Oct 27','Nov 27','Dec 27','Jan 28'];
+  var startDate=new Date('2026-04-01'),endDate=new Date('2028-02-01');var totalDays=(endDate-startDate)/86400000;var todayPct=Math.max(0,Math.min(100,((new Date()-startDate)/86400000)/totalDays*100));
+  var ic={1:'#34D399',2:'#60A5FA',3:'#FBBF24',4:'#F472B6',5:'#A78BFA'};var rows='';
+  for(var i=1;i<=5;i++){var it=tasks.filter(function(t){return t.initiative===i&&t.due;}).sort(function(a,b){return a.due.localeCompare(b.due);});if(!it.length)continue;var earliest=new Date(it[0].due),latest=new Date(it[it.length-1].due);var left=Math.max(0,((earliest-startDate)/86400000)/totalDays*100);var width=Math.max(2,((latest-earliest)/86400000)/totalDays*100);
+  rows+='<div class="gantt-row"><div class="gantt-label" style="font-weight:700">'+i+'. '+INITIATIVES[i].short+'</div><div class="gantt-bars" style="position:relative"><div class="gantt-bar" style="left:'+left+'%;width:'+width+'%;background:'+ic[i]+';box-shadow:0 2px 12px '+ic[i]+'40">'+INITIATIVES[i].short+'</div></div></div>';
+  it.filter(function(t){return t.priority==='Critical';}).forEach(function(t){var l=Math.max(0,((new Date(t.due)-startDate)/86400000)/totalDays*100);rows+='<div class="gantt-row"><div class="gantt-label" style="padding-left:20px;font-weight:400;font-size:11px;color:var(--text-tertiary)">'+t.task.substring(0,50)+(t.task.length>50?'...':'')+'</div><div class="gantt-bars"><div class="gantt-bar" style="left:'+l+'%;width:1.5%;background:'+ic[i]+'60;font-size:0"></div></div></div>';});}
+  document.getElementById('gantt-grid').innerHTML='<div class="gantt-months" style="position:relative">'+months.map(function(m){return'<div class="gantt-month">'+m+'</div>';}).join('')+'<div class="gantt-today" style="left:'+todayPct+'%;" title="Today"></div></div>'+rows;
+}
+
+function renderTeam(){
+  var panel=document.getElementById('panel-team');var members=['Aaron','Tim','Nigel'];var html='';
+  members.forEach(function(m){var mt=tasks.filter(function(t){return t.assignee===m;});var done=mt.filter(function(t){return t.status==='Done';}).length;var open=mt.filter(function(t){return t.status!=='Done';}).length;var critical=mt.filter(function(t){return t.priority==='Critical'&&t.status!=='Done';}).length;var overdue=mt.filter(function(t){return t.status!=='Done'&&daysUntil(t.due)<0;}).length;var needsDep=mt.filter(function(t){return t.status==='Needs New Task';}).length;var pct=mt.length?Math.round(done/mt.length*100):0;var cls=m.toLowerCase();var memberColor=cls==='aaron'?'var(--gold)':cls==='tim'?'var(--status-info)':'var(--status-purple)';
+  var recentUpdates=updates.filter(function(u){return u.author===m;}).sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);}).slice(0,3);
+  html+='<div style="margin-bottom:32px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><span class="avatar avatar-'+cls+'" style="width:40px;height:40px;font-size:16px">'+m[0]+'</span><div><div style="font-family:\'DM Sans\',sans-serif;font-size:18px;font-weight:700;color:#FFF">'+m+'</div><div style="font-size:12px;color:var(--text-tertiary)">'+mt.length+' tasks \u2014 '+open+' open, '+done+' done</div></div><div style="margin-left:auto;display:flex;gap:12px">'+(critical?'<span class="badge badge-critical">'+critical+' Critical</span>':'')+(overdue?'<span class="badge badge-critical">'+overdue+' Overdue</span>':'')+(needsDep?'<span class="badge badge-dep">'+needsDep+' Needs Task</span>':'')+'</div></div><div style="background:rgba(255,255,255,0.04);border-radius:6px;height:6px;margin-bottom:16px;overflow:hidden"><div style="background:'+memberColor+';height:100%;width:'+pct+'%;border-radius:6px;box-shadow:0 0 8px '+memberColor+'"></div></div>';
+  if(recentUpdates.length){html+='<div style="margin-bottom:12px;padding:12px 16px;background:var(--surface);border-radius:8px;border:1px solid var(--border)"><div style="font-size:10px;font-weight:600;color:var(--text-tertiary);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.8px">Latest Updates</div>'+recentUpdates.map(function(u){return'<div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px"><span style="color:var(--text-tertiary)">'+fmtTimestamp(u.timestamp)+'</span> \u2014 '+u.text.substring(0,120)+(u.text.length>120?'...':'')+'</div>';}).join('')+'</div>';}
+  html+='<div class="table-card"><div class="table-wrap"><table><thead><tr><th>Task</th><th>Init</th><th>Due</th><th>Status</th><th>Priority</th><th>Actions</th></tr></thead><tbody>'+mt.filter(function(t){return t.status!=='Done';}).sort(function(a,b){return(a.due||'9999').localeCompare(b.due||'9999');}).map(function(t){return'<tr><td style="font-weight:600">'+t.task+'</td><td>'+initBadge(t.initiative)+'</td><td style="white-space:nowrap">'+fmtDate(t.due)+'</td><td>'+statusBadge(t.status)+'</td><td>'+priorityBadge(t.priority)+'</td><td><button class="btn btn-outline btn-sm" onclick="editTask('+t.id+')">Edit</button> <button class="btn btn-outline btn-sm" onclick="cycleStatus('+t.id+')">&rarr;</button></td></tr>';}).join('')+'</tbody></table></div></div></div>';});
+  var unassigned=tasks.filter(function(t){return!t.assignee;});
+  if(unassigned.length){html+='<div class="table-card"><div class="table-header"><h3>Unassigned Tasks ('+unassigned.length+')</h3></div><div class="table-wrap"><table><thead><tr><th>Task</th><th>Init</th><th>Due</th><th>Priority</th><th>Actions</th></tr></thead><tbody>'+unassigned.map(function(t){return'<tr><td style="font-weight:600">'+t.task+'</td><td>'+initBadge(t.initiative)+'</td><td>'+fmtDate(t.due)+'</td><td>'+priorityBadge(t.priority)+'</td><td><button class="btn btn-outline btn-sm" onclick="editTask('+t.id+')">Assign</button></td></tr>';}).join('')+'</tbody></table></div></div>';}
+  panel.innerHTML=html;
+}
+
+function cycleStatus(id){var t=tasks.find(function(x){return x.id===id;});if(!t)return;var order=['To Do','In Progress','In Review','Done'];var idx=order.indexOf(t.status);if(idx>=0)t.status=order[(idx+1)%order.length];else t.status='In Progress';render();}
+
+function editTask(id){var t=tasks.find(function(x){return x.id===id;});if(!t)return;document.getElementById('modal-title').textContent='Edit Task';document.getElementById('edit-id').value=id;document.getElementById('edit-task').value=t.task;document.getElementById('edit-initiative').value=t.initiative;document.getElementById('edit-phase').value=t.phase;document.getElementById('edit-assignee').value=t.assignee||'';document.getElementById('edit-due').value=t.due||'';document.getElementById('edit-status').value=t.status;document.getElementById('edit-priority').value=t.priority;document.getElementById('edit-notes').value=t.notes||'';document.getElementById('dep-section').style.display=t.status==='Needs New Task'?'block':'none';document.getElementById('modal-overlay').classList.add('show');}
+
+function openAddTask(){document.getElementById('modal-title').textContent='Add New Task';document.getElementById('edit-id').value='';document.getElementById('edit-task').value='';document.getElementById('edit-initiative').value='1';document.getElementById('edit-phase').value='';document.getElementById('edit-assignee').value='';document.getElementById('edit-due').value='';document.getElementById('edit-status').value='To Do';document.getElementById('edit-priority').value='Medium';document.getElementById('edit-notes').value='';document.getElementById('dep-section').style.display='none';document.getElementById('modal-overlay').classList.add('show');}
+
+function closeModal(){document.getElementById('modal-overlay').classList.remove('show');}
+function closeDepModal(){document.getElementById('dep-modal-overlay').classList.remove('show');}
+
+function saveTask(){var id=document.getElementById('edit-id').value;var data={task:document.getElementById('edit-task').value,initiative:+document.getElementById('edit-initiative').value,phase:document.getElementById('edit-phase').value,assignee:document.getElementById('edit-assignee').value||'',due:document.getElementById('edit-due').value,status:document.getElementById('edit-status').value,priority:document.getElementById('edit-priority').value,notes:document.getElementById('edit-notes').value};if(!data.task)return alert('Task name is required');if(id){var t=tasks.find(function(x){return x.id===+id;});if(t){var oldDeps=t.deps||[];Object.assign(t,data);t.deps=oldDeps;}var depText=document.getElementById('edit-dep-task').value.trim();if(depText&&data.status==='Needs New Task'){var parentTask=tasks.find(function(x){return x.id===+id;});var newDep={id:++nextId,task:'[DEP] '+depText,initiative:data.initiative,phase:'Dependency',assignee:data.assignee,due:'',status:'To Do',priority:'High',notes:'Dependency for task #'+id,deps:[]};tasks.push(newDep);if(parentTask){if(!parentTask.deps)parentTask.deps=[];parentTask.deps.push(newDep.id);}updates.push({id:++nextUpdateId,author:data.assignee||'System',timestamp:new Date().toISOString(),taskId:+id,text:'Added dependency task: "'+depText+'" (task #'+newDep.id+')',type:'dependency'});document.getElementById('edit-dep-task').value='';}}else{tasks.push({id:++nextId,task:data.task,initiative:data.initiative,phase:data.phase,assignee:data.assignee,due:data.due,status:data.status,priority:data.priority,notes:data.notes,deps:[]});}closeModal();render();}
+
+document.getElementById('edit-status').addEventListener('change',function(){document.getElementById('dep-section').style.display=this.value==='Needs New Task'?'block':'none';});
+
+function openDepModal(parentId){var t=tasks.find(function(x){return x.id===parentId;});document.getElementById('dep-parent-id').value=parentId;document.getElementById('dep-new-task').value='';document.getElementById('dep-initiative').value=t?t.initiative:1;document.getElementById('dep-due').value='';document.getElementById('dep-priority').value='High';document.getElementById('dep-owner').value=t?t.assignee||'Aaron':'Aaron';document.getElementById('dep-modal-overlay').classList.add('show');}
+
+function saveDependency(){var parentId=+document.getElementById('dep-parent-id').value;var text=document.getElementById('dep-new-task').value.trim();var owner=document.getElementById('dep-owner').value;if(!text)return alert('Please describe the dependency task.');var parentTask=tasks.find(function(t){return t.id===parentId;});var newTask={id:++nextId,task:'[DEP] '+text,initiative:+document.getElementById('dep-initiative').value,phase:'Dependency',assignee:owner,due:document.getElementById('dep-due').value,status:'To Do',priority:document.getElementById('dep-priority').value,notes:'Dependency added by '+owner+(parentTask?' for task #'+parentId:''),deps:[]};tasks.push(newTask);if(parentTask){if(!parentTask.deps)parentTask.deps=[];parentTask.deps.push(newTask.id);parentTask.status='Needs New Task';}updates.push({id:++nextUpdateId,author:owner,timestamp:new Date().toISOString(),taskId:parentId,text:'I need to handle: "'+text+'" before task #'+parentId+' can progress. Created as my task #'+newTask.id+'.',type:'dependency'});closeDepModal();render();}
+
+function exportCSV(){var headers=['ID','Task','Initiative','Phase','Assignee','Due Date','Status','Priority','Dependencies','Notes'];var rows=tasks.map(function(t){return[t.id,'"'+t.task+'"','"'+INITIATIVES[t.initiative].name+'"','"'+t.phase+'"',t.assignee||'Unassigned',t.due||'',t.status,t.priority,(t.deps||[]).join(';'),'"'+(t.notes||'').replace(/"/g,'""')+'"'];});var csv=[headers.join(',')].concat(rows.map(function(r){return r.join(',');})).join('\n');var blob=new Blob([csv],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ppe-tasks-export.csv';a.click();}
+
+document.querySelectorAll('.tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});tab.classList.add('active');document.getElementById('panel-'+tab.dataset.tab).classList.add('active');});});
+document.querySelectorAll('th[data-sort]').forEach(function(th){th.addEventListener('click',function(){var col=th.dataset.sort;if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=true;}render();});});
+['f-assignee','f-status','f-priority','f-initiative'].forEach(function(id){document.getElementById(id).addEventListener('change',render);});
+document.getElementById('f-search').addEventListener('input',render);
+document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===document.getElementById('modal-overlay'))closeModal();});
+document.getElementById('dep-modal-overlay').addEventListener('click',function(e){if(e.target===document.getElementById('dep-modal-overlay'))closeDepModal();});
+
+render();
+</script>
+</body>
+</html>
